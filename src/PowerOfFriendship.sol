@@ -49,8 +49,8 @@ contract PowerOfFriendship is ERC20, Ownable {
     error Forbidden();
 
     constructor(uint256 _totalSupply) {
-        _initializeOwner(msg.sender);
         _mint(msg.sender, _totalSupply);
+        _initializeOwner(msg.sender);
     }
 
     function name() public view virtual override returns (string memory) {
@@ -79,7 +79,7 @@ contract PowerOfFriendship is ERC20, Ownable {
         if (blacklists[to] || blacklists[from]) revert BlackListed();
 
         if (uniswapV2Pair == address(0)) {
-            if (from != owner() || to != owner()) revert TradingNotStarted();
+            if (from != owner()) revert TradingNotStarted();
         }
 
         if (limited && from == uniswapV2Pair) {
